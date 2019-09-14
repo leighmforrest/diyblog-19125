@@ -1,0 +1,11 @@
+.comments {
+  margin: 20px 0;
+}
+.comment {
+  padding: 15px 0;
+  border-top: 1px solid lightgrey;
+  border-bottom: -1px solid lightgrey;
+}
+.comment:last-child {
+  border-bottom: 1px solid lightgrey;
+}
