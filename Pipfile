@@ -12,6 +12,8 @@ dj-database-url = "*"
 django-crispy-forms = "*"
 python-decouple = "*"
 django-allauth = "*"
+gunicorn = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.7"
