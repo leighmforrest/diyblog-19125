@@ -25,7 +25,7 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", cast=bool)
 S3 = config("S3", cast=bool)
 
-ALLOWED_HOSTS = ['diy-blog.herokuapp.com/', '0.0.0.0', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['diy-blog.herokuapp.com', '0.0.0.0', 'localhost', '127.0.0.1']
 
 
 # Application definition
