@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth import get_user_model
 
 
@@ -18,6 +19,10 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse("blog:detail", kwargs={"pk": self.pk})
+    
 
 
 class Comment(models.Model):
@@ -32,5 +37,8 @@ class Comment(models.Model):
         ordering = ['created_at']
 
     def __str__(self):
+        n = len(self.comment)
+        if n > 75:
+            return self.comment[:75] + '...'
         return self.comment
     

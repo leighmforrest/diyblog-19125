@@ -1,9 +1,12 @@
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Permission
 from django.db.models import Q
 
-from blog.models import Blog
+from blog.models import Blog, Comment
+from blog.forms import CommentForm
 
 
 class BlogDetailView(DetailView):
@@ -26,7 +29,7 @@ class BloggersView(ListView):
     def get_queryset(self):
         permission = Permission.objects.get(codename='blogger')
         return get_user_model().objects.filter(
-            Q(user_permissions=permission) | Q(is_superuser=True)).distinct()
+            Q(user_permissions=permission) | Q(is_superuser=True)).distinct().order_by('username')
 
 
 class BloggerView(DetailView):
@@ -37,5 +40,23 @@ class BloggerView(DetailView):
         permission = Permission.objects.get(codename='blogger')
         return get_user_model().objects.filter(
             Q(user_permissions=permission) | Q(is_superuser=True), pk=self.kwargs['pk'])
+
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    template_name = 'blog/create_comment.html'
+    form_class = CommentForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["blog"] = Blog.objects.get(pk=self.kwargs['pk'])
+        return context
     
+    def get_success_url(self):
+        return Blog.objects.get(pk=self.kwargs['pk']).get_absolute_url()
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.blog = Blog.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
     
