@@ -1,0 +1,11 @@
+{% extends '_base.html' %}
+
+{% block content %}
+<h1>All Blogs</h1>
+<ul>
+    {% for blog in blogs %}
+        <li><a href="{% url 'blog:detail' blog.pk %}">{{ blog.title }}</a></li>
+    {% endfor %}
+</ul>
+{% include 'partials/_pagination.html' %}
+{% endblock content %}

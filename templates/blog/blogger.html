@@ -1,0 +1,13 @@
+{% extends '_base.html' %}
+
+{% block content %}
+<h1>{{ blogger.username }}</h1>
+<h2>Bio</h2>
+<p>{{blogger.bio}}</p>
+<h2>Blogs List</h2>
+<ul>
+    {% for blog in blogger.blogs.all %}
+        <li><a href="{% url 'blog:detail' blog.pk %}">{{ blog.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock content %}
