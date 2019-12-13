@@ -7,7 +7,10 @@ from django.contrib.auth import get_user_model
 
 class Blog(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='blogs')
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='blogs')
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=3000)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,7 +1,7 @@
 import random
 import string
 
-from django.test import TestCase, RequestFactory
+from django.test import TestCase
 from django.contrib.auth.models import Permission
 from django.contrib.auth import get_user_model
 from django.db.models import Q
